@@ -23,10 +23,10 @@ router.get('/',(req,res,next)=>{
 router.get('/userinfo',async (req,res,next)=>{
 	const code=req.query.code;
 	try{
-	const {tokens} = await oauth2Client.getToken(code);
+  	const {tokens} = await oauth2Client.getToken(code);
     oauth2Client.setCredentials(tokens);
     localstorage.set("access_token",tokens); 
-    res.status(200).redirect('/google/userData');
+    res.status(200).redirect('/userData');
     }catch(error){
 	console.log(error);}
 });

@@ -8,12 +8,22 @@ import { LoginService } from 'src/app/login.service';
 export class LoginOptionComponent implements OnInit {
 
   constructor(private loginService:LoginService) { }
-
+   data:any;
+   url="http://localhost:3000";
   ngOnInit() {
     
   }
 
   onGoogleAPI(){
+
+       this.loginService.get(this.url).subscribe((res:any[])=>{
+
+       console.log(res);
+      },
+      error=>{
+        console.log(error);
+      })
+
 
   }
   onFaceBook(){
