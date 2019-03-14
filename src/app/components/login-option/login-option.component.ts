@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from 'src/app/login.service';
+
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-login-option',
   templateUrl: './login-option.component.html',
@@ -7,27 +10,40 @@ import { LoginService } from 'src/app/login.service';
 })
 export class LoginOptionComponent implements OnInit {
 
-  constructor(private loginService:LoginService) { }
+  constructor(private router:Router ,private loginService:LoginService) { }
    data:any;
-   url="http://localhost:3000";
+  
   ngOnInit() {
+  
     
   }
 
-  onGoogleAPI(){
 
-       this.loginService.get(this.url).subscribe((res:any[])=>{
 
-       console.log(res);
+ onGoogleAPI(){
+ const path="google"
+ this.loginService.getUser(path).subscribe(
+      (res:any)=>{
+        window.location.href=res.url;
       },
-      error=>{
-        console.log(error);
-      })
-
+       error=>{ console.log(error);}
+       )
 
   }
-  onFaceBook(){
-    
-  }
+
+  onFaceBookAPI(){
+    const path="facebook";
+   this.loginService.getUser(path).subscribe(
+    (res:any)=>{
+    console.log(res.url);
+    window.location.href=res.url;
+   
+  },
+   error=>{ console.log(error);}
+ )
 
 }
+    
+  }
+
+

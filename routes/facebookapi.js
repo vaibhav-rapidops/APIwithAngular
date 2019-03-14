@@ -24,17 +24,18 @@ passport.deserializeUser(function(user,done){
 })
 
 router.get('/',(req,res,next)=>{
-   res.redirect('facebook/auth/facebook');
+   res.send({url:'http://localhost:3000/facebook/auth/facebook'});
 });
 
 router.get('/auth/facebook', passport.authenticate('facebook'));
 
 router.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }),
   function(req, res) {
-    res.redirect('/facebook/userData');
+    const content={}
+    res.status(200).redirect("http://localhost:4200/contact?type=fapi");
   });
 router.get('/userData',(req,res)=>{
-	res.status(200).send('Login Successfull....');
+	res.status(200).send({message:'Login Successfull....'});
 })
 
 

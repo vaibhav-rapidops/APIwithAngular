@@ -1,3 +1,23 @@
-<p>
-  user-data works!
-</p>
+
+<div *ngIf="check" class="container-fluid">
+	<div class="col-lg-4 col-md-4 col-sm-4">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Persoon Name</th>
+        <th>Mobile No.</th>
+      </tr>
+    </thead>
+    <tbody  >
+	     <tr *ngFor="let data of datas">
+		<td>{{data.personName}}</td>
+		<td>{{data.contectNo}}</td>
+    	</tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<div *ngIf="!check" class="container-fluid">
+{{datas}}
+</div>

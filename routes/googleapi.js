@@ -17,7 +17,8 @@ const url = oauth2Client.generateAuthUrl({
 });
 
 router.get('/',(req,res,next)=>{
-	res.redirect(url);
+  console.log(url);
+	res.status(200).send({url:url});
 });
 
 router.get('/userinfo',async (req,res,next)=>{
@@ -26,7 +27,8 @@ router.get('/userinfo',async (req,res,next)=>{
   	const {tokens} = await oauth2Client.getToken(code);
     oauth2Client.setCredentials(tokens);
     localstorage.set("access_token",tokens); 
-    res.status(200).redirect('/userData');
+
+    res.status(200).redirect("http://localhost:4200/contact?type=gapi")
     }catch(error){
 	console.log(error);}
 });
@@ -34,6 +36,7 @@ router.get('/userData',(req,res,next)=>{
  	 const tokens=localstorage.get("access_token");
      oauth2Client.setCredentials(tokens);
      let userDetail=[];
+     const gmail = google.gmail({version: 'v1', auth});
        const service = google.people({version: 'v1', auth:oauth2Client});
        service.people.connections.list({resourceName: 'people/me',personFields:'names,phoneNumbers'},(error,result)=>{
        if(error) return console.log(error);
@@ -48,9 +51,8 @@ router.get('/userData',(req,res,next)=>{
                    })  
                }});
         }
-       // res.status(200).(userDatail);
-
-          res.render('../views/index',{userDetail:userDetail});
+       
+          res.send({userDetail:userDetail});
 
 
      });
